@@ -1,0 +1,17 @@
+[bootstrap]
+main_collection = /main/main.collectionc
+render = /main/render/our.renderc
+
+[script]
+shared_state = 1
+
+[display]
+width = 1920
+height = 1080
+
+[android]
+input_method = HiddenInputField
+
+[project]
+title = shader test
+
