@@ -316,7 +316,7 @@ void main()
 
 ## The newsprite.fp Fragment Program
 The fragment program is a little lengthy and it would not be a good use of time explaining how everything works in here, as it's information I got from the [LearnOpenGL](https://learnopengl.com/Lighting/Colors) tutorial. I recommend taking a look at this to get a better understanding of lighting.
-In short, this is the program that does all of the calculation for light reflection. You can check it out (I'll link it here when it's on GitHub).
+In short, this is the program that does all of the calculation for light reflection. You can check it out [here](https://github.com/mchlkpng/shader-test/blob/main/main/materials/newsprite/newsprite.fp).
 
 By the way, this is the attenuation equation:
 
