@@ -2,6 +2,9 @@
 # GLSL Normal/Specular Lighting in Defold
 I wanted to make a walk-through of how this could be used. This is a project that experiments using lights and normal/specular maps to make shading. This project is 2d but this concept could be generalized into 3d.
 
+This is the example provided in the above project:
+https://mchlkpng.github.io/shader-test/
+
 ## 1. Light objects
 All the lights are represented through objects. In the `main.collection`, childed under the `/lights` object are objects labelled `/light[number]`, each with a sprite `#sprite`. These objects will be representing the lights and the sprites carry the properties of the lights.
 ![Light objects in collection](https://i.ibb.co/J5Svwf7/lights.png)
