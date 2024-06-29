@@ -131,7 +131,6 @@ function lighting.update_value(url, key, value, forAnim)
 			go.set(url, "position", value)
 		elseif key == "pointing_to" then
 			local pt = go.get(url.."#sprite", "pointing_to")
-			print(pt)
 			go.set(url.."#sprite", key, vmath.vector4(value.x, value.y, value.z, 0))
 		end
 	end
@@ -207,7 +206,6 @@ function lighting.animate_value(url, key, playback, value, easing, duration, del
 	elseif key == "position" then
 		go.animate(url, key, playback, value, easing, duration, delay, callback)
 	elseif key == "pointing_to" then
-		print(go.get(spriteurl, "light_type"))
 		go.animate(spriteurl, key, playback, vmath.vector4(value.x, value.y, value.z, 0), easing, duration, delay, callback)
 	end
 

@@ -20,6 +20,25 @@ uniform mediump vec4 light_spotdata[MAX_LIGHTS];
 uniform mediump vec4 view_pos;
 uniform mediump vec4 spec_strength;
 
+float power(float n, int e) {
+    float new = 1.0;
+    if (e > 0) {
+        for (int i = 0; i < e; i++) {
+            new *= n;
+        }
+    } else if (e < 0) {
+        for (int i = 0; i < e; i++) {
+            new /= n;
+        }
+    }
+
+    return new;
+}
+
+float maximum(float n1, float n2) {
+    if (n1 > n2) {return n1;} else if (n2 > n1) {return n2;} else {return n1;}
+}
+
 
 void main() 
 {
@@ -27,7 +46,7 @@ void main()
     vec4 albedo_color = texture2D(diffuse, var_texcoord0.xy);
     vec4 normal_color = texture2D(normal, var_texcoord0.xy) * 2.0 -1.0;
     vec4 spec_color = texture2D(specular, var_texcoord0.xy);
-    lowp vec4 color_diffuse = vec4(0);
+    lowp vec4 color_diffuse = vec4(0.0);
 
     vec4 final_color = ambient * albedo_color;
 
@@ -37,7 +56,7 @@ void main()
 
     for (light_index = 0; light_index < lights; light_index++) {
         
-        if (light_positions[light_index].w == 0) { //DIRECTIONAL LIGHT
+        if (int(light_positions[light_index].w) == 0) { //DIRECTIONAL LIGHT
             //lowp vec3 light_dir = normalize(light_positions[light_index].xyz - var_position.xyz);
             lowp vec3 light_dir = normalize(light_directions[light_index].xyz);
             
@@ -54,15 +73,15 @@ void main()
 
             //premultiply color cuz i need to lmao
             highp vec4 l_col = vec4(light_colors[light_index].xyz * light_colors[light_index].w, light_colors[light_index].w);
-            float specular = pow(max(dot(view_dir, reflect_dir), 0.0), 32);
+            float specular = power(maximum(dot(view_dir, reflect_dir), 0.0), 32);
             spec_color = (specular * l_col * spec_color *spec_strength.x);
 
-            float diff = max(0, dot(normal_color.xyz, light_dir.xyz));
+            float diff = maximum(0.0, dot(normal_color.xyz, light_dir.xyz));
             color_diffuse = diff * l_col;
 
             final_color += vec4((color_diffuse + spec_color).xyz * albedo_color.xyz, albedo_color.w);
         }
-        else if (light_positions[light_index].w == 1) {//POINT LIGHT
+        else if (int(light_positions[light_index].w) == 1) {//POINT LIGHT
             lowp vec3 light_dir = light_positions[light_index].xyz - var_position.xyz;
             float distance = length(light_dir);
             light_dir = normalize(light_dir);
@@ -82,15 +101,15 @@ void main()
 
             highp vec4 l_col = vec4(light_colors[light_index].xyz * light_colors[light_index].w, light_colors[light_index].w);
             // Calculate Specular
-            float specular = pow(max(dot(view_dir, reflect_dir), 0.0), 32);
+            float specular = power(maximum(dot(view_dir, reflect_dir), 0.0), 32);
             spec_color = (specular * l_col * spec_color *spec_strength.x*attenuation);
 
-            float diff = max(0, dot(normal_color.xyz, light_dir.xyz));
+            float diff = maximum(0.0, dot(normal_color.xyz, light_dir.xyz));
             color_diffuse = diff * l_col * attenuation;
 
             final_color += vec4((color_diffuse + spec_color).xyz * albedo_color.xyz, albedo_color.w);
         }
-        else if (light_positions[light_index].w == 2) { //SPOTLIGHT
+        else if (int(light_positions[light_index].w) == 2) { //SPOTLIGHT
             lowp vec3 light_dir = light_positions[light_index].xyz - var_position.xyz;
             float distance = length(light_dir);
             light_dir = normalize(light_dir);
@@ -112,10 +131,10 @@ void main()
             //premultiply color cuz i need to lmao
             highp vec4 l_col = vec4(light_colors[light_index].xyz * light_colors[light_index].w, light_colors[light_index].w);
             // Calculate Specular
-            float specular = pow(max(dot(view_dir, reflect_dir), 0.0), 32);
+            float specular = power(maximum(dot(view_dir, reflect_dir), 0.0), 32);
             spec_color = (specular * l_col * spec_color *spec_strength.x) * intensity * attenuation;
 
-            float diff = max(0, dot(normal_color.xyz, light_dir.xyz));
+            float diff = maximum(0.0, dot(normal_color.xyz, light_dir.xyz));
             color_diffuse = diff * l_col * intensity*attenuation;
 
             final_color += vec4((color_diffuse + spec_color).xyz * albedo_color.xyz, albedo_color.w);

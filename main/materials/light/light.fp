@@ -13,5 +13,5 @@ void main()
     // Pre-multiply alpha since all runtime textures already are
     lowp vec4 tint_pm = vec4(tint.xyz * tint.w, tint.w);
     lowp vec4 useless = light_type * attenuation * pointing_to * spot_data;
-    gl_FragColor = texture2D(texture_sampler, var_texcoord0.xy) * tint_pm;
+    gl_FragColor = texture2D(texture_sampler, var_texcoord0.xy) * tint_pm * useless/useless;
 }
