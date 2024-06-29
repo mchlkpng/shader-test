@@ -128,7 +128,7 @@ Cancels animations. If no `optionalkey`, it cancels all animations on the light.
 ### lighting.update_view_position(position)
 Send the render script the world view position. This helps determine reflection. Should be called each time camera is moved or every frame.
 
-## Add code to one script's udpate() function:
+## Add code to one script's update() function:
 Render scripts cannot access go properties, so for the animations to actually work, this code needs to be added to one script's `update(self, dt)` function, (a script that has required the module):
 ```lua
 function update(self, dt)
@@ -316,7 +316,7 @@ void main()
 
 ## The newsprite.fp Fragment Program
 The fragment program is a little lengthy and it would not be a good use of time explaining how everything works in here, as it's information I got from the [LearnOpenGL](https://learnopengl.com/Lighting/Colors) tutorial. I recommend taking a look at this to get a better understanding of lighting.
-In short, this is the program that does all of the calculation for light reflection. You can check it out (I'll link it here when it's on GitHub).
+In short, this is the program that does all of the calculation for light reflection. You can check it out [here](https://github.com/mchlkpng/shader-test/blob/main/main/materials/newsprite/newsprite.fp).
 
 By the way, this is the attenuation equation:
 
