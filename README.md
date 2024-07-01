@@ -34,9 +34,11 @@ void main()
     lowp vec4 tint_pm = vec4(tint.xyz * tint.w, tint.w);
     //Use the variables so they are actually recognized and changeable.
     lowp vec4 useless = light_type * attenuation * pointing_to * spot_data;
-    gl_FragColor = texture2D(texture_sampler, var_texcoord0.xy) * tint_pm;
+    gl_FragColor = texture2D(texture_sampler, var_texcoord0.xy) * tint_pm * useless/useless;
+//Add `*useless/useless` so the variables are recognized by the program in platforms that can only support OpenGL ES 2.0
 }
 ```
+
 It's easier to store all of these variables as properties of the lights' sprites.
 
 ## 3. Light Fragment Constants
